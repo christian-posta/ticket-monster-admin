@@ -47,7 +47,19 @@ public class Seat {
     public int getNumber() {
         return number;
     }
-    
+
+    public void setRowNumber(int rowNumber) {
+        this.rowNumber = rowNumber;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public void setSection(Section section) {
+        this.section = section;
+    }
+
     @Override
     public String toString() {
         return new StringBuilder().append(getSection()).append(" (").append(getRowNumber()).append(", ").append(getNumber()).append(")").toString();

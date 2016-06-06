@@ -99,6 +99,22 @@ public class Ticket implements Serializable {
 		return seat;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setSeat(Seat seat) {
+		this.seat = seat;
+	}
+
+	public void setTicketCategory(TicketCategory ticketCategory) {
+		this.ticketCategory = ticketCategory;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
 	@Override
 	public String toString() {
 		return new StringBuilder().append(getSeat()).append(" @ ")
