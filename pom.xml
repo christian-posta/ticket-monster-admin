@@ -62,8 +62,10 @@
     <fabric8.label.service>ticket-monster-admin</fabric8.label.service>
     <fabric8.iconRef>wildfly</fabric8.iconRef>
 
-    <fabric8.env.DEBUG>true</fabric8.env.DEBUG>
-    <fabric8.env.DEBUG_PORT>5005</fabric8.env.DEBUG_PORT>
+    <fabric8.env.AB_JOLOKIA_OFF>true</fabric8.env.AB_JOLOKIA_OFF>
+    <fabric8.env.JAVA_ENABLE_DEBUG>false</fabric8.env.JAVA_ENABLE_DEBUG>
+    <fabric8.env.JAVA_DEBUG_PORT>5005</fabric8.env.JAVA_DEBUG_PORT>
+    <fabric8.env.JAVA_OPTIONS>"-Dswarm.ds.username=root -Dswarm.ds.password=admin -Dswarm.ds.name=TicketMonsterMySQLDS -Dswarm.ds.connection.url=jdbc:mysql://mysql:3306/ticketmonster"</fabric8.env.JAVA_OPTIONS>
   </properties>
 
   <dependencyManagement>
@@ -282,34 +284,20 @@
               <build>
                 <from>${docker.from}</from>
                 <assembly>
-                  <configuration>
-                    <images>
-                      <image>
-                        <name>${docker.image}</name>
-                        <build>
-                          <from>${docker.from}</from>
-                          <assembly>
-                            <basedir>/app</basedir>
-                            <inline>
-                              <id>${project.artifactId}</id>
-                              <files>
-                                <file>
-                                  <source>${project.build.directory}/${project.build.finalName}-swarm.jar</source>
-                                  <outputDirectory>/</outputDirectory>
-                                </file>
-                              </files>
-                            </inline>
-                          </assembly>
-                          <env>
-                            <JAVA_APP_JAR>${project.build.finalName}-swarm.jar</JAVA_APP_JAR>
-                          </env>
-                        </build>
-                      </image>
-                    </images>
-                  </configuration>
-                  <user>jboss:jboss:jboss</user>
-                  <basedir>/opt/jboss/wildfly/</basedir>
+                  <basedir>/app</basedir>
+                  <inline>
+                    <id>${project.artifactId}</id>
+                    <files>
+                      <file>
+                        <source>${project.build.directory}/${project.build.finalName}-swarm.jar</source>
+                        <outputDirectory>/</outputDirectory>
+                      </file>
+                    </files>
+                  </inline>
                 </assembly>
+                <env>
+                  <JAVA_APP_JAR>${project.build.finalName}-swarm.jar</JAVA_APP_JAR>
+                </env>
               </build>
             </image>
           </images>
@@ -332,6 +320,18 @@
             <phase>package</phase>
             <goals>
               <goal>attach</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.wildfly.swarm</groupId>
+        <artifactId>wildfly-swarm-plugin</artifactId>
+        <version>${wildfly.swarm.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>package</goal>
             </goals>
           </execution>
         </executions>
@@ -484,46 +484,22 @@
               <skip>true</skip>
             </configuration>
           </plugin>
+          <plugin>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.6</version>
+            <configuration>
+              <packagingExcludes>WEB-INF/ticket-monster-ds.xml</packagingExcludes>
+            </configuration>
+          </plugin>
         </plugins>
       </build>
       <dependencies>
         <dependency>
           <groupId>org.wildfly.swarm</groupId>
           <artifactId>jpa-mysql</artifactId>
+          <version>1.0.0.CR3</version>
         </dependency>
       </dependencies>
-    </profile>
-
-    <profile>
-      <!-- Create a release distribution with the right directory layout. -->
-      <!-- product build specific assembly -->
-      <id>release-dist</id>
-      <build>
-        <plugins>
-          <plugin>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <configuration>
-              <descriptors>
-                <descriptor>src/main/assembly/assembly.xml</descriptor>
-              </descriptors>
-            </configuration>
-            <executions>
-              <execution>
-                <phase>package</phase>
-                <goals>
-                  <goal>single</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <configuration>
-              <skip>true</skip>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
     </profile>
 
 
@@ -532,18 +508,6 @@
       <id>f8-build</id>
       <build>
         <defaultGoal>clean install docker:build fabric8:json</defaultGoal>
-      </build>
-    </profile>
-    <profile>
-      <id>wfswarm</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>wildfly-swarm-plugin</artifactId>
-            <version>${wildfly.swarm.version}</version>
-          </plugin>
-        </plugins>
       </build>
     </profile>
     <profile>
