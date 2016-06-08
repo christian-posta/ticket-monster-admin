@@ -53,11 +53,11 @@ public class BookingDTO implements Serializable
       {
          entity = new Booking();
       }
-      Iterator<Ticket> iterTickets = entity.getTickets().iterator();
-      while (iterTickets.hasNext())
+      Iterator<Ticket> tickets = entity.getTickets().iterator();
+      while (tickets.hasNext())
       {
          boolean found = false;
-         Ticket ticket = iterTickets.next();
+         Ticket ticket = tickets.next();
          Iterator<NestedTicketDTO> iterDtoTickets = this.getTickets()
                .iterator();
          while (iterDtoTickets.hasNext())
@@ -71,38 +71,26 @@ public class BookingDTO implements Serializable
          }
          if (found == false)
          {
-            iterTickets.remove();
+            tickets.remove();
          }
       }
-      Iterator<NestedTicketDTO> iterDtoTickets = this.getTickets().iterator();
-      while (iterDtoTickets.hasNext())
+      Iterator<NestedTicketDTO> dtoTickets = this.getTickets().iterator();
+      while (dtoTickets.hasNext())
       {
          boolean found = false;
-         NestedTicketDTO dtoTicket = iterDtoTickets.next();
-         iterTickets = entity.getTickets().iterator();
-         while (iterTickets.hasNext())
+         NestedTicketDTO dtoTicket = dtoTickets.next();
+         tickets = entity.getTickets().iterator();
+         while (tickets.hasNext())
          {
-            Ticket ticket = iterTickets.next();
+            Ticket ticket = tickets.next();
             if (dtoTicket.getId().equals(ticket.getId()))
             {
                found = true;
                break;
             }
          }
-         if (found == false)
-         {
-            Iterator<Ticket> resultIter = em
-                  .createQuery("SELECT DISTINCT t FROM Ticket t",
-                        Ticket.class).getResultList().iterator();
-            while (resultIter.hasNext())
-            {
-               Ticket result = resultIter.next();
-               if (result.getId().equals(dtoTicket.getId()))
-               {
-                  entity.getTickets().add(result);
-                  break;
-               }
-            }
+         if (found == false) {
+            entity.getTickets().add(dtoTicket.fromDTO(null, em));
          }
       }
       entity.setCreatedOn(this.createdOn);
