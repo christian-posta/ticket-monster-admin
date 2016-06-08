@@ -26,6 +26,7 @@ public class ReaderExceptionMapper implements ExceptionMapper<Exception> {
     public Response toResponse(Exception exception) {
         Map<String, Object> responseEntity = new HashMap<String, Object>();
         responseEntity.put("errors", Collections.singletonList("The submitted request is invalid. Please retry after correcting the input values."));
+        responseEntity.put("exception", exception.toString());
         return Response.status(Response.Status.BAD_REQUEST).
                 entity(responseEntity).
                 type(headers.getMediaType()).

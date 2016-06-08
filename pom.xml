@@ -54,7 +54,7 @@
     <fabric8.service.type>LoadBalancer</fabric8.service.type>
 
     <fabric8.readinessProbe.httpGet.port>8080</fabric8.readinessProbe.httpGet.port>
-    <fabric8.readinessProbe.httpGet.path>/</fabric8.readinessProbe.httpGet.path>
+    <fabric8.readinessProbe.httpGet.path>/rest/forge/events</fabric8.readinessProbe.httpGet.path>
     <fabric8.readinessProbe.timeoutSeconds>30</fabric8.readinessProbe.timeoutSeconds>
     <fabric8.readinessProbe.initialDelaySeconds>5</fabric8.readinessProbe.initialDelaySeconds>
 
@@ -65,7 +65,7 @@
     <fabric8.env.AB_JOLOKIA_OFF>true</fabric8.env.AB_JOLOKIA_OFF>
     <fabric8.env.JAVA_ENABLE_DEBUG>false</fabric8.env.JAVA_ENABLE_DEBUG>
     <fabric8.env.JAVA_DEBUG_PORT>5005</fabric8.env.JAVA_DEBUG_PORT>
-    <fabric8.env.JAVA_OPTIONS>"-Dswarm.ds.username=root -Dswarm.ds.password=admin -Dswarm.ds.name=TicketMonsterMySQLDS -Dswarm.ds.connection.url=jdbc:mysql://mysql:3306/ticketmonster"</fabric8.env.JAVA_OPTIONS>
+    <fabric8.env.JAVA_OPTIONS>-Dswarm.ds.username=root -Dswarm.ds.password=admin -Dswarm.ds.name=TicketMonsterMySQLDS -Dswarm.ds.connection.url=jdbc:mysql://mysql:3306/ticketmonster</fabric8.env.JAVA_OPTIONS>
   </properties>
 
   <dependencyManagement>
@@ -235,7 +235,10 @@
       <groupId>org.wildfly.swarm</groupId>
       <artifactId>jaxrs-cdi</artifactId>
     </dependency>
-
+    <dependency>
+      <groupId>org.wildfly.swarm</groupId>
+      <artifactId>transactions</artifactId>
+    </dependency>
 
 
   </dependencies>
