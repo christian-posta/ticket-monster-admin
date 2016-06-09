@@ -9,6 +9,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -36,6 +37,7 @@ public class TicketEndpoint
 
    @POST
    @Consumes("application/json")
+   @Transactional
    public Response create(TicketDTO dto)
    {
       Ticket entity = dto.fromDTO(null, em);
@@ -106,6 +108,7 @@ public class TicketEndpoint
    @PUT
    @Path("/{id:[0-9][0-9]*}")
    @Consumes("application/json")
+   @Transactional
    public Response update(@PathParam("id") Long id, TicketDTO dto)
    {
       TypedQuery<Ticket> findByIdQuery = em.createQuery("SELECT DISTINCT t FROM Ticket t LEFT JOIN FETCH t.ticketCategory WHERE t.id = :entityId ORDER BY t.id", Ticket.class);

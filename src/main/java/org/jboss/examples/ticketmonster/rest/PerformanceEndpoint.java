@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -44,6 +45,7 @@ public class PerformanceEndpoint
 
    @POST
    @Consumes("application/json")
+   @Transactional
    public Response create(PerformanceDTO dto)
    {
       Performance entity = dto.fromDTO(null, em);
@@ -126,6 +128,7 @@ public class PerformanceEndpoint
    @PUT
    @Path("/{id:[0-9][0-9]*}")
    @Consumes("application/json")
+   @Transactional
    public Response update(@PathParam("id") Long id, PerformanceDTO dto)
    {
       TypedQuery<Performance> findByIdQuery = em.createQuery("SELECT DISTINCT p FROM Performance p LEFT JOIN FETCH p.show WHERE p.id = :entityId ORDER BY p.id", Performance.class);

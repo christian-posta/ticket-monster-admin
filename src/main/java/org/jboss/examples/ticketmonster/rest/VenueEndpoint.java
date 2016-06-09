@@ -9,6 +9,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -36,6 +37,7 @@ public class VenueEndpoint
 
    @POST
    @Consumes("application/json")
+   @Transactional
    public Response create(VenueDTO dto)
    {
       Venue entity = dto.fromDTO(null, em);
@@ -106,6 +108,7 @@ public class VenueEndpoint
    @PUT
    @Path("/{id:[0-9][0-9]*}")
    @Consumes("application/json")
+   @Transactional
    public Response update(@PathParam("id") Long id, VenueDTO dto)
    {
       TypedQuery<Venue> findByIdQuery = em.createQuery("SELECT DISTINCT v FROM Venue v LEFT JOIN FETCH v.sections LEFT JOIN FETCH v.mediaItem WHERE v.id = :entityId ORDER BY v.id", Venue.class);
