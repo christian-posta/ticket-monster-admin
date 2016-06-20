@@ -126,23 +126,27 @@ parameters:
   generate: expression
   name: MYSQL_USER
   required: true
+  value: ticket
 - description: Password for the MySQL user.
   displayName: MySQL Password
   from: '[a-zA-Z0-9]{16}'
   generate: expression
   name: MYSQL_PASSWORD
+  value: monster
 - description: Username for MySQL user that will access the database as a slave
   displayName: MySQL Master User
   from: user[A-Z0-9]{3}
   generate: expression
   name: MYSQL_MASTER_USER
   required: false
+  value: replicator
 - description: Password for the MySQL Masteruser.
   displayName: MySQL Master Password
   from: '[a-zA-Z0-9]{16}'
   generate: expression
   name: MYSQL_MASTER_PASSWORD
   required: false
+  value: replpass
 - description: Root password
   displayName: MySQL Root Password
   from: '[a-zA-Z0-9]{16}'
@@ -153,4 +157,4 @@ parameters:
   displayName: MySQL Database Name
   name: MYSQL_DATABASE
   required: true
-  value: sampledb
+  value: ticketmonster
