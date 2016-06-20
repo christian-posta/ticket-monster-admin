@@ -38,7 +38,7 @@
 
     <!--  fabric8 / docker -->
     <docker.maven.plugin.version>0.14.2</docker.maven.plugin.version>
-    <docker.from>fabric8/java-jboss-openjdk8-jdk:1.0.10</docker.from>
+    <docker.from>fabric8/java-jboss-openjdk8-jdk:1.0.13</docker.from>
     <docker.image>${fabric8.dockerUser}${project.artifactId}:${project.version}</docker.image>
     <docker.port.container.http>8080</docker.port.container.http>
     <docker.port.container.jolokia>8778</docker.port.container.jolokia>
@@ -61,7 +61,7 @@
     <fabric8.label.service>ticket-monster-admin</fabric8.label.service>
     <fabric8.iconRef>wildfly</fabric8.iconRef>
 
-    <fabric8.env.AB_JOLOKIA_OFF>true</fabric8.env.AB_JOLOKIA_OFF>
+    <fabric8.env.AB_OFF>true</fabric8.env.AB_OFF>
     <fabric8.env.JAVA_ENABLE_DEBUG>false</fabric8.env.JAVA_ENABLE_DEBUG>
     <fabric8.env.JAVA_DEBUG_PORT>5005</fabric8.env.JAVA_DEBUG_PORT>
     <fabric8.env.JAVA_OPTIONS>-Dswarm.ds.username=root -Dswarm.ds.password=admin -Dswarm.ds.name=TicketMonsterMySQLDS -Dswarm.ds.connection.url=jdbc:mysql://mysql-admin:3306/ticketmonster</fabric8.env.JAVA_OPTIONS>
