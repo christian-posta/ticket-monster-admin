@@ -64,7 +64,7 @@
     <fabric8.env.AB_OFF>true</fabric8.env.AB_OFF>
     <fabric8.env.JAVA_ENABLE_DEBUG>false</fabric8.env.JAVA_ENABLE_DEBUG>
     <fabric8.env.JAVA_DEBUG_PORT>5005</fabric8.env.JAVA_DEBUG_PORT>
-    <fabric8.env.JAVA_OPTIONS>-Dswarm.ds.username=root -Dswarm.ds.password=admin -Dswarm.ds.name=TicketMonsterMySQLDS -Dswarm.ds.connection.url=jdbc:mysql://mysql-admin:3306/ticketmonster</fabric8.env.JAVA_OPTIONS>
+    <fabric8.env.JAVA_OPTIONS>-Dswarm.ds.username=root -Dswarm.ds.password=admin -Dswarm.ds.name=TicketMonsterMySQLDS -Dswarm.ds.connection.url=jdbc:mysql://mysqladmin:3306/ticketmonster</fabric8.env.JAVA_OPTIONS>
   </properties>
 
   <dependencyManagement>

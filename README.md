@@ -36,14 +36,31 @@ Can port forward to your local machine from vagrant like this:
 > vagrant ssh -- -vnNTL *:8080:$DOCKER_HOST_IP:8080
 
 
+## Running with a MySQL backend:
+
+```
+mvn clean package -Pmysql,f8-build docker:build
+```
+
+
 ## Ticket Monster on Kubernetes
 
 ```
 mvn -Pf8-build fabric8:apply
 ```
 
-## Running with a MySQL backend:
+
+## Bootstrap the databases
+
+We need to refer to the mysql database template from [https://github.com/christian-posta/ticket-monster-infra](https://github.com/christian-posta/ticket-monster-infra). We can install the template with:
 
 ```
-mvn clean package -Pmysql,f8-build docker:build
+oc create -f mysql-openshift-template.yml
+```
+
+Now let's create the mysql database for the admin microservice:
+
+```
+oc process ticket-monster-mysql -v DATABASE_SERVICE_NAME=mysqladmin | oc create -f -
+oc deploy mysqladmin --latest
 ```
