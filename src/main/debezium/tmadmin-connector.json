@@ -1,0 +1,17 @@
+{
+  "config": {
+    "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+    "database.binlog": "mysql-bin.000001",
+    "database.history.kafka.bootstrap.servers": "kafka:9092",
+    "database.history.kafka.topic": "schema-changes.ticketmonster.admin",
+    "database.hostname": "mysqladmin",
+    "database.password": "replpass",
+    "database.port": "3306",
+    "database.server.id": "184054",
+    "database.server.name": "tm-admin",
+    "database.user": "replicator",
+    "database.whitelist": "ticketmonster",
+    "tasks.max": "1"
+  },
+  "name": "tmadmin-connector"
+}

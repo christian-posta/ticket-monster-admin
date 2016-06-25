@@ -1,0 +1,90 @@
+---
+apiVersion: "v1"
+items:
+- apiVersion: "v1"
+  kind: "Service"
+  metadata:
+    annotations: {}
+    labels:
+      project: "connect-mysql"
+      provider: "debezium"
+      version: "0.1-SNAPSHOT"
+      group: "io.debezium"
+    name: "connect-mysql"
+  spec:
+    deprecatedPublicIPs: []
+    externalIPs: []
+    ports:
+    - port: 80
+      protocol: "TCP"
+      targetPort: 8083
+    selector:
+      project: "connect-mysql"
+      provider: "debezium"
+      group: "io.debezium"
+- apiVersion: "v1"
+  kind: "ReplicationController"
+  metadata:
+    annotations:
+      fabric8.io/git-commit: "e29bd9752f12c166fb989fabebc9cfb3bba4e331"
+      fabric8.io/git-branch: "0.2-SNAPSHOT"
+    labels:
+      project: "connect-mysql"
+      provider: "debezium"
+      version: "0.1-SNAPSHOT"
+      group: "io.debezium"
+    name: "connect-mysql"
+  spec:
+    replicas: 1
+    selector:
+      project: "connect-mysql"
+      provider: "debezium"
+      version: "0.1-SNAPSHOT"
+      group: "io.debezium"
+    template:
+      metadata:
+        annotations: {}
+        labels:
+          project: "connect-mysql"
+          provider: "debezium"
+          version: "0.1-SNAPSHOT"
+          group: "io.debezium"
+      spec:
+        containers:
+        - args: []
+          command: []
+          env:
+          - name: "OFFSET_STORAGE_TOPIC"
+            value: "my-connect-offsets"
+          - name: "HOST_NAME"
+            value: "0.0.0.0"
+          - name: "BOOTSTRAP_SERVERS"
+            value: "kafka:9092"
+          - name: "CONFIG_STORAGE_TOPIC"
+            value: "tmadmin-connect-configs"
+          - name: "KAFKA_OPTS"
+            value: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
+          - name: "GROUP_ID"
+            value: "debezium-tm-admin"
+          - name: "KUBERNETES_NAMESPACE"
+            valueFrom:
+              fieldRef:
+                fieldPath: "metadata.namespace"
+          - name: "ADVERTISED_HOST_NAME"
+            valueFrom:
+              fieldRef:
+                fieldPath: "status.podIP"
+          image: "docker.io/debezium/connect:0.1"
+          imagePullPolicy: "IfNotPresent"
+          name: "connect-mysql"
+          ports:
+          - containerPort: 8083
+            name: "rest"
+          - containerPort: 5005
+            name: "debug"
+          securityContext: {}
+          volumeMounts: []
+        imagePullSecrets: []
+        nodeSelector: {}
+        volumes: []
+kind: "List"
