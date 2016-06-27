@@ -6,11 +6,11 @@ items:
   metadata:
     annotations: {}
     labels:
-      project: "connect-mysql"
+      project: "debezium-mysql-admin"
       provider: "debezium"
       version: "0.1-SNAPSHOT"
       group: "io.debezium"
-    name: "connect-mysql"
+    name: "debezium-mysql-admin"
   spec:
     deprecatedPublicIPs: []
     externalIPs: []
@@ -19,7 +19,7 @@ items:
       protocol: "TCP"
       targetPort: 8083
     selector:
-      project: "connect-mysql"
+      project: "debezium-mysql-admin"
       provider: "debezium"
       group: "io.debezium"
 - apiVersion: "v1"
@@ -29,15 +29,15 @@ items:
       fabric8.io/git-commit: "e29bd9752f12c166fb989fabebc9cfb3bba4e331"
       fabric8.io/git-branch: "0.2-SNAPSHOT"
     labels:
-      project: "connect-mysql"
+      project: "debezium-mysql-admin"
       provider: "debezium"
       version: "0.1-SNAPSHOT"
       group: "io.debezium"
-    name: "connect-mysql"
+    name: "debezium-mysql-admin"
   spec:
     replicas: 1
     selector:
-      project: "connect-mysql"
+      project: "debezium-mysql-admin"
       provider: "debezium"
       version: "0.1-SNAPSHOT"
       group: "io.debezium"
@@ -45,7 +45,7 @@ items:
       metadata:
         annotations: {}
         labels:
-          project: "connect-mysql"
+          project: "debezium-mysql-admin"
           provider: "debezium"
           version: "0.1-SNAPSHOT"
           group: "io.debezium"
@@ -74,9 +74,9 @@ items:
             valueFrom:
               fieldRef:
                 fieldPath: "status.podIP"
-          image: "docker.io/debezium/connect:0.1"
+          image: "docker.io/debezium/connect:0.2"
           imagePullPolicy: "IfNotPresent"
-          name: "connect-mysql"
+          name: "debezium-mysql-admin"
           ports:
           - containerPort: 8083
             name: "rest"
