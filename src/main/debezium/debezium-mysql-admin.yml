@@ -55,7 +55,7 @@ items:
           command: []
           env:
           - name: "OFFSET_STORAGE_TOPIC"
-            value: "my-connect-offsets"
+            value: "tmadmin-connect-offsets"
           - name: "HOST_NAME"
             value: "0.0.0.0"
           - name: "BOOTSTRAP_SERVERS"
@@ -74,7 +74,7 @@ items:
             valueFrom:
               fieldRef:
                 fieldPath: "status.podIP"
-          image: "docker.io/debezium/connect:0.2"
+          image: "docker.io/debezium/connect:0.1"
           imagePullPolicy: "IfNotPresent"
           name: "debezium-mysql-admin"
           ports:
