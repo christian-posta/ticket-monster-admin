@@ -3,7 +3,5 @@ spec:
     spec:
       containers:
       - env:
-        - name: "AB_OFF"
-          value: "true"
         - name: "JAVA_OPTIONS"
           value: "-Dswarm.ds.username=root -Dswarm.ds.password=admin -Dswarm.ds.name=TicketMonsterMySQLDS -Dswarm.ds.connection.url=jdbc:mysql://mysqladmin:3306/ticketmonster"
